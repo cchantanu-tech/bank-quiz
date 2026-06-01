@@ -130,6 +130,18 @@ button:active {
 }
 
 /* =========================
+   途中で終了するボタン
+========================= */
+.secondary-btn {
+    background-color: #6c757d;
+    margin-top: 12px;
+}
+
+.secondary-btn:hover {
+    background-color: #5a6268;
+}
+
+/* =========================
    支店一覧テーブル
 ========================= */
 

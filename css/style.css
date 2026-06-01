@@ -1,3 +1,6 @@
+/* ==========================================================================
+   全体設定 & リセット
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -5,273 +8,346 @@
 }
 
 body {
-    font-family: sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333333;
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
 }
 
 .container {
-    max-width: 700px;
+    width: 100%;
+    max-width: 640px;
     margin: 0 auto;
     background-color: #ffffff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
+/* ==========================================================================
+   タイポグラフィ
+   ========================================================================== */
 h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    color: #1e293b;
+    letter-spacing: -0.5px;
 }
 
 h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #475569;
     margin-bottom: 12px;
 }
 
 h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 32px;
+    margin-bottom: 16px;
 }
 
+/* ==========================================================================
+   設定グループ（モダンなボタン型選択UI）
+   ========================================================================== */
 .setting-group {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
+/* ラジオボタンの隠蔽とカード化 */
 .setting-group label {
-    display: block;
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
     margin-bottom: 10px;
     cursor: pointer;
+    font-weight: 500;
+    transition: all 0.25s ease;
 }
 
-/* =========================
-   支店一覧ボタン
-========================= */
-
-#branch-list-btn {
-    width: 100%;
-    margin-bottom: 24px;
-
-    background-color: #f8f9fa;
-    color: #333;
-
-    border: 1px solid #dee2e6;
-
-    font-weight: bold;
+.setting-group label:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
-#branch-list-btn:hover {
-    background-color: #e9ecef;
+.setting-group input[type="radio"] {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: #0078d4; /* モダンなブラウザでのチェックカラー */
 }
 
-#branch-list-btn::before {
-    content: "📋 ";
+/* チェックが入ったときのスタイル */
+.setting-group label:has(input[type="radio"]:checked) {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
 }
 
-/* =========================
+/* ==========================================================================
    問題画面
-========================= */
-
+   ========================================================================== */
 #progress {
     text-align: right;
-    margin-bottom: 10px;
-    color: #666;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-bottom: 12px;
 }
 
 .question-box {
-    margin: 24px 0;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fafafa;
+    margin: 0 0 24px 0;
+    padding: 32px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background-color: #f8fafc;
     text-align: center;
 }
 
+#question-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
 #question {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
 }
 
-/* =========================
-   ボタン共通
-========================= */
+input[type="text"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
 
+/* ==========================================================================
+   ボタン類
+   ========================================================================== */
 button {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
-    border-radius: 8px;
-    background-color: #0078d4;
-    color: white;
-    font-size: 1rem;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
-button:hover {
-    opacity: 0.9;
+/* メインボタン（テスト開始・回答・再挑戦） */
+#start-btn, #submit-btn, #restart-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+#start-btn:hover, #submit-btn:hover, #restart-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* サブボタン（途中で終了、間違えた問題だけ再挑戦） */
+.secondary-btn, #retry-mistake-btn {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+.secondary-btn:hover, #retry-mistake-btn:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+/* ホーム・戻るボタン */
+#home-btn, #back-home-btn {
+    background-color: #64748b;
+    color: #ffffff;
+}
+
+#home-btn:hover, #back-home-btn:hover {
+    background-color: #475569;
+}
+
+/* 支店一覧を見るボタン（特別枠） */
+#branch-list-btn {
+    background-color: #ffffff;
+    color: #334155;
+    border: 2px solid #e2e8f0;
+    margin-bottom: 32px;
+}
+
+#branch-list-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
 }
 
 button:active {
-    transform: scale(0.98);
+    transform: scale(0.98) !important;
 }
 
-/* =========================
-   途中で終了するボタン
-========================= */
-.secondary-btn {
-    background-color: #6c757d;
-    margin-top: 12px;
-}
-
-.secondary-btn:hover {
-    background-color: #5a6268;
-}
-
-/* =========================
+/* ==========================================================================
    支店一覧テーブル
-========================= */
-
+   ========================================================================== */
 #branch-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
-    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
 }
 
 #branch-table th {
-    background-color: #0078d4;
-    color: white;
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 #branch-table th,
 #branch-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    padding: 14px 16px;
     text-align: left;
+    font-size: 0.95rem;
+}
+
+#branch-table td {
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+#branch-table tr:last-child td {
+    border-bottom: none;
 }
 
 #branch-table tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #f8fafc;
 }
 
-/* =========================
-   結果画面
-========================= */
-
-#score,
-#rate {
+/* ==========================================================================
+   結果画面 & リスト
+   ========================================================================== */
+#score {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #0f172a;
     text-align: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin: 10px 0;
+    margin-top: 16px;
+}
+
+#rate {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3b82f6;
+    text-align: center;
+    margin-bottom: 24px;
 }
 
 hr {
-    margin: 20px 0;
+    margin: 24px 0;
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e2e8f0;
 }
 
-/* 正解一覧 */
-
-#correct-list {
+/* 結果リスト共通 */
+#correct-list, #mistake-list {
     list-style: none;
 }
 
+#correct-list li, #mistake-list li {
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 正解リスト */
 #correct-list li {
-    background-color: #f0fff4;
-    border-left: 5px solid #28a745;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
 }
 
-/* 間違い一覧 */
-
-#mistake-list {
-    list-style: none;
-}
-
+/* 間違いリスト */
 #mistake-list li {
-    background-color: #fff5f5;
-    border-left: 5px solid #dc3545;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
 }
-
-/* =========================
-   結果ボタン
-========================= */
 
 .button-group {
     display: flex;
+    flex-direction: column;
     gap: 12px;
-    margin-top: 24px;
+    margin-top: 32px;
 }
 
-.button-group button {
-    flex: 1;
-    width: auto;
-    min-height: 56px;
-    font-weight: bold;
-}
-
-#restart-btn {
-    background-color: #0078d4;
-}
-
-#home-btn {
-    background-color: #6c757d;
-}
-
-/* =========================
-   スマホ対応
-========================= */
-
-@media (max-width: 600px) {
-
+/* ==========================================================================
+   画面幅に応じたレスポンシブ（スマホ対応）
+   ========================================================================== */
+@media (max-width: 640px) {
     body {
-        padding: 10px;
+        padding: 16px;
+        align-items: flex-start;
     }
 
     .container {
-        padding: 16px;
+        padding: 24px;
+        border-radius: 16px;
     }
 
     h1 {
         font-size: 1.5rem;
+        margin-bottom: 24px;
     }
 
     #question {
-        font-size: 1.6rem;
-    }
-
-    input[type="text"] {
-        font-size: 1rem;
+        font-size: 1.8rem;
     }
 
     #branch-table th,
     #branch-table td {
-        padding: 8px;
-        font-size: 0.9rem;
-    }
-
-    .button-group {
-        gap: 8px;
+        padding: 10px 12px;
+        font-size: 0.85rem;
     }
 }

@@ -5,6 +5,7 @@ const branchListScreen = document.getElementById("branch-list-screen");
 
 const startBtn = document.getElementById("start-btn");
 const submitBtn = document.getElementById("submit-btn");
+const giveUpBtn = document.getElementById("give-up-btn");
 const restartBtn = document.getElementById("restart-btn");
 const homeBtn = document.getElementById("home-btn");
 const retryMistakeBtn = document.getElementById("retry-mistake-btn");
@@ -34,6 +35,7 @@ let mistakes = [];
 
 startBtn.addEventListener("click", startQuiz);
 submitBtn.addEventListener("click", submitAnswer);
+giveUpBtn.addEventListener("click", finishQuizMidway);
 restartBtn.addEventListener("click", restartQuiz);
 homeBtn.addEventListener("click", goHome);
 retryMistakeBtn.addEventListener("click", retryMistakes);
@@ -157,7 +159,6 @@ function submitAnswer() {
     }
 }
 
-// ★修正箇所：モードによって結果の表示を切り替えるように変更
 function showResult() {
     quizScreen.classList.add("hidden");
     resultScreen.classList.remove("hidden");
@@ -187,8 +188,6 @@ function showResult() {
 
     mistakes.forEach(mistake => {
         const li = document.createElement("li");
-        
-        // モードに合わせて正解のテキスト表示を切り替え
         const correctText = mode === "nameToCode" ? mistake.code : `${mistake.name}（${mistake.kana}）`;
 
         if (mode === "nameToCode") {
@@ -212,7 +211,6 @@ function restartQuiz() {
     startQuiz();
 }
 
-// ★修正箇所：間違えた問題の配列を、元のデータ構造（code, name, kana）に正しく復元して再セット
 function retryMistakes() {
     if (mistakes.length === 0) return;
 
@@ -262,4 +260,16 @@ function showBranchList() {
 function backHome() {
     branchListScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
+}
+
+function finishQuizMidway() {
+    if (currentIndex === 0) {
+        goHome();
+        return;
+    }
+
+    if (confirm("ここまでの回答でテストを終了し、結果を表示しますか？")) {
+        questions = questions.slice(0, currentIndex);
+        showResult();
+    }
 }

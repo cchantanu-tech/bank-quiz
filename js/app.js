@@ -54,22 +54,17 @@ function startQuiz() {
 
     questions = [...branches];
 
-    // 出題順
     if (order === "random") {
         questions.sort(() => Math.random() - 0.5);
-
     } else if (order === "sequential") {
         questions.sort((a, b) => Number(a.code) - Number(b.code));
-
     } else if (order === "randomSequential") {
         const shuffled = [...questions].sort(() => Math.random() - 0.5);
-
         if (questionCount !== "all") {
             questions = shuffled.slice(0, Number(questionCount));
         } else {
             questions = shuffled;
         }
-
         questions.sort((a, b) => Number(a.code) - Number(b.code));
     }
 
@@ -97,17 +92,16 @@ function showQuestion() {
     progress.textContent = `問題 ${currentIndex + 1} / ${questions.length}`;
 
     if (mode === "nameToCode") {
-        questionTitle.textContent = "支店名";
+        questionTitle.textContent = "支店名 / 出張所名";
         question.innerHTML = `
             ${currentQuestion.name}<br>
-            <span style="font-size:1rem; color:#666;">（${currentQuestion.kana}）</span>
+            <span style="font-size:0.95rem; font-weight:normal; color:#64748b; display:block; margin-top:4px;">（${currentQuestion.kana}）</span>
         `;
         answerInput.placeholder = "店番を入力";
-
     } else {
         questionTitle.textContent = "店番";
         question.textContent = currentQuestion.code;
-        answerInput.placeholder = "支店名（漢字 or ひらがな）";
+        answerInput.placeholder = "名前（漢字 or ひらがな）";
     }
 
     answerInput.value = "";
@@ -125,13 +119,21 @@ function submitAnswer() {
 
     if (mode === "nameToCode") {
         isCorrect = answer === currentQuestion.code;
-
     } else {
         const normalizedAnswer = answer.replace(/\s+/g, "").toLowerCase();
         const normalizedName = currentQuestion.name.replace(/\s+/g, "").toLowerCase();
         const normalizedKana = currentQuestion.kana.replace(/\s+/g, "").toLowerCase();
+        
+        // 「支店」や「出張所」を入力し忘れても正解にする親切設計
+        const rawName = normalizedName.replace(/支店|出張所/g, "");
+        const rawKana = normalizedKana.replace(/してん|しゅっちょうしょ/g, "");
 
-        isCorrect = (normalizedAnswer === normalizedName || normalizedAnswer === normalizedKana);
+        isCorrect = (
+            normalizedAnswer === normalizedName || 
+            normalizedAnswer === normalizedKana ||
+            normalizedAnswer === rawName ||
+            normalizedAnswer === rawKana
+        );
     }
 
     if (isCorrect) {
@@ -175,32 +177,25 @@ function showResult() {
     correctAnswers.forEach(correct => {
         const li = document.createElement("li");
         if (mode === "nameToCode") {
-            li.innerHTML = `
-                ${correct.name} <span style="color:#666;">（${correct.kana}）</span> → ${correct.code}
-            `;
+            li.innerHTML = `<strong>${correct.name}</strong> → ${correct.code}`;
         } else {
-            li.innerHTML = `
-                店番: ${correct.code} → ${correct.name} <span style="color:#666;">（${correct.kana}）</span>
-            `;
+            li.innerHTML = `店番: <strong>${correct.code}</strong> → ${correct.name}`;
         }
         correctList.appendChild(li);
     });
 
     mistakes.forEach(mistake => {
         const li = document.createElement("li");
-        const correctText = mode === "nameToCode" ? mistake.code : `${mistake.name}（${mistake.kana}）`;
-
+        const correctText = mode === "nameToCode" ? mistake.code : `${mistake.name}`;
         if (mode === "nameToCode") {
             li.innerHTML = `
-                <strong>${mistake.name}</strong> <span style="color:#666;">（${mistake.kana}）</span><br>
-                あなたの回答：${mistake.answer}<br>
-                正解：${correctText}
+                <strong>${mistake.name}</strong><br>
+                あなたの回答：<span style="color:#ef4444;">${mistake.answer}</span> / 正解：<strong>${correctText}</strong>
             `;
         } else {
             li.innerHTML = `
                 <strong>店番: ${mistake.code}</strong><br>
-                あなたの回答：${mistake.answer}<br>
-                正解：${correctText}
+                あなたの回答：<span style="color:#ef4444;">${mistake.answer}</span> / 正解：<strong>${correctText}</strong>
             `;
         }
         mistakeList.appendChild(li);
@@ -241,7 +236,6 @@ function goHome() {
 function showBranchList() {
     startScreen.classList.add("hidden");
     branchListScreen.classList.remove("hidden");
-
     branchTableBody.innerHTML = "";
 
     const sortedBranches = [...branches].sort((a, b) => Number(a.code) - Number(b.code));
@@ -249,9 +243,9 @@ function showBranchList() {
     sortedBranches.forEach(branch => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${branch.code}</td>
+            <td><strong>${branch.code}</strong></td>
             <td>${branch.name}</td>
-            <td>${branch.kana}</td>
+            <td style="color:#64748b; font-size:0.85rem;">${branch.kana}</td>
         `;
         branchTableBody.appendChild(row);
     });
@@ -267,7 +261,6 @@ function finishQuizMidway() {
         goHome();
         return;
     }
-
     if (confirm("ここまでの回答でテストを終了し、結果を表示しますか？")) {
         questions = questions.slice(0, currentIndex);
         showResult();

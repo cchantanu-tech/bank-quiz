@@ -4,155 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>銀行支店暗記テスト</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <div class="container">
-
         <h1>銀行支店暗記テスト</h1>
 
         <div id="start-screen">
-
-            <button id="branch-list-btn">
-                支店一覧を見る
-            </button>
+            <button id="branch-list-btn">支店一覧を見る</button>
 
             <div class="setting-group">
-
                 <h2>出題順</h2>
-
-                <label>
-                    <input type="radio" name="order" value="random" checked>
-                    ランダム（適当）
-                </label>
-
-                <label>
-                    <input type="radio" name="order" value="sequential">
-                    店番順
-                </label>
-
-                <label>
-                    <input type="radio" name="order" value="randomSequential">
-                    ランダム（店番順）
-                </label>
-
+                <div class="segmented-control">
+                    <label><input type="radio" name="order" value="random" checked><span>ランダム</span></label>
+                    <label><input type="radio" name="order" value="sequential"><span>店番順</span></label>
+                    <label><input type="radio" name="order" value="randomSequential"><span>ランダム(店番順)</span></label>
+                </div>
             </div>
 
             <div class="setting-group">
-
                 <h2>出題モード</h2>
-
-                <label>
-                    <input type="radio" name="mode" value="nameToCode" checked>
-                    支店名 → 店番
-                </label>
-
-                <label>
-                    <input type="radio" name="mode" value="codeToName">
-                    店番 → 支店名（逆クイズ）
-                </label>
-
+                <div class="segmented-control">
+                    <label><input type="radio" name="mode" value="nameToCode" checked><span>支店名 → 店番</span></label>
+                    <label><input type="radio" name="mode" value="codeToName"><span>店番 → 支店名</span></label>
+                </div>
             </div>
 
             <div class="setting-group">
-
                 <h2>問題数</h2>
-
-                <label>
-                    <input type="radio" name="questionCount" value="10" checked>
-                    10問
-                </label>
-
-                <label>
-                    <input type="radio" name="questionCount" value="20">
-                    20問
-                </label>
-
-                <label>
-                    <input type="radio" name="questionCount" value="all">
-                    全問
-                </label>
-
+                <div class="segmented-control">
+                    <label><input type="radio" name="questionCount" value="10" checked><span>10問</span></label>
+                    <label><input type="radio" name="questionCount" value="20"><span>20問</span></label>
+                    <label><input type="radio" name="questionCount" value="50"><span>50問</span></label>
+                    <label><input type="radio" name="questionCount" value="all"><span>全問</span></label>
+                </div>
             </div>
-
-            <button id="start-btn">
-                テスト開始
-            </button>
-
+            <div class="setting-group">
+                <h2>出題範囲</h2>
+                <div class="segmented-control">
+                    <label><input type="radio" name="range" value="all" checked><span>全119拠点</span></label>
+                    <label><input type="radio" name="range" value="past"><span>過去問(55拠点)</span></label>
+                </div>
+            </div>
+            <button id="start-btn">テスト開始</button>
         </div>
 
         <div id="branch-list-screen" class="hidden">
-
             <h2>支店一覧</h2>
-
-            <table id="branch-table">
-                <thead>
-                    <tr>
-                        <th>店番</th>
-                        <th>支店名</th>
-                        <th>ふりがな</th>
-                    </tr>
-                </thead>
-                <tbody id="branch-table-body"></tbody>
-            </table>
-
-            <button id="back-home-btn">
-                ホームへ戻る
-            </button>
-
+            <div class="table-container">
+                <table id="branch-table">
+                    <thead>
+                        <tr>
+                            <th>店番</th>
+                            <th>支店名</th>
+                            <th>ふりがな</th>
+                        </tr>
+                    </thead>
+                    <tbody id="branch-table-body"></tbody>
+                </table>
+            </div>
+            <button id="back-home-btn">ホームへ戻る</button>
         </div>
 
         <div id="quiz-screen" class="hidden">
-
             <p id="progress">問題 1 / 10</p>
-
             <div class="question-box">
                 <h2 id="question-title">支店名</h2>
                 <p id="question"></p>
             </div>
-
             <input type="text" id="answer" placeholder="回答を入力" autocomplete="off">
-
-            <button id="submit-btn">回答</button>
+            <button id="submit-btn">回答する</button>
             <button id="give-up-btn" class="secondary-btn">途中で終了して結果を見る</button>
-
         </div>
 
         <div id="result-screen" class="hidden">
-
-            <h2>結果</h2>
-
+            <h2>テスト完了</h2>
             <p id="score"></p>
             <p id="rate"></p>
-
             <hr>
-
             <h3>正解した問題</h3>
             <ul id="correct-list"></ul>
-
             <hr>
-
             <h3>間違えた問題</h3>
             <ul id="mistake-list"></ul>
-
             <div class="button-group">
-
-                <button id="restart-btn">再挑戦</button>
-
-                <button id="retry-mistake-btn">間違えた問題だけ再挑戦</button>
-
-                <button id="home-btn">ホーム</button>
-
+                <button id="restart-btn">もう一度挑戦</button>
+                <button id="retry-mistake-btn" class="secondary-btn">間違えた問題だけ再挑戦</button>
+                <button id="home-btn">ホームに戻る</button>
             </div>
-
         </div>
-
     </div>
 
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
-
 </body>
 </html>

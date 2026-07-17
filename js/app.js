@@ -50,34 +50,34 @@ const mistakeList = document.getElementById("mistake-list");
 // =======================
 const writtenTest1 = [
     { question: "三木支店", answer: "226", type: "nameToCode" },
-    { question: "311", answer: "庵治出張所", type: "codeToName" },
+    { question: "311", answer: "庵治", type: "codeToName" },
 
     { question: "古高松支店", answer: "312", type: "nameToCode" },
-    { question: "222", answer: "香西支店", type: "codeToName" },
+    { question: "222", answer: "香西", type: "codeToName" },
 
     { question: "一宮出張所", answer: "341", type: "nameToCode" },
-    { question: "305", answer: "鬼無出張所", type: "codeToName" },
+    { question: "305", answer: "鬼無", type: "codeToName" },
 
     { question: "鶴市出張所", answer: "342", type: "nameToCode" },
-    { question: "225", answer: "志度支店", type: "codeToName" },
+    { question: "225", answer: "志度", type: "codeToName" },
 
     { question: "伏石支店", answer: "304", type: "nameToCode" },
-    { question: "221", answer: "仏生山支店", type: "codeToName" },
+    { question: "221", answer: "仏生山", type: "codeToName" },
 
     { question: "水田支店", answer: "315", type: "nameToCode" },
-    { question: "219", answer: "太田支店", type: "codeToName" },
+    { question: "219", answer: "太田", type: "codeToName" },
 
     { question: "円座支店", answer: "223", type: "nameToCode" },
-    { question: "314", answer: "医大前出張所", type: "codeToName" },
+    { question: "314", answer: "医大前", type: "codeToName" },
 
     { question: "頭脳化センター出張所", answer: "357", type: "nameToCode" },
-    { question: "309", answer: "畑田出張所", type: "codeToName" },
+    { question: "309", answer: "畑田", type: "codeToName" },
 
     { question: "屋島支店", answer: "220", type: "nameToCode" },
-    { question: "224", answer: "八栗支店", type: "codeToName" },
+    { question: "224", answer: "八栗", type: "codeToName" },
 
     { question: "川島支店", answer: "227", type: "nameToCode" },
-    { question: "359", answer: "さぬき市役所出張所", type: "codeToName" }
+    { question: "359", answer: "さぬき市役所", type: "codeToName" }
 ];
 
 // =======================

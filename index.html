@@ -8,95 +8,152 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>銀行支店暗記テスト</h1>
+<div class="container">
+    <h1>銀行支店暗記テスト</h1>
 
-        <div id="start-screen">
-            <button id="branch-list-btn">支店一覧を見る</button>
+    <!-- 0. トップ画面 -->
+    <div id="top-screen">
+        <div class="top-logo">百十四銀行</div>
+    </div>
+    
+    <!-- ① モード選択画面 -->
+    <div id="mode-screen">
+        <button id="normal-mode-btn">通常モード</button>
+        <button id="test-mode-btn">テストモード</button>
+    </div>
 
-            <div class="setting-group">
-                <h2>出題順</h2>
-                <div class="segmented-control">
-                    <label><input type="radio" name="order" value="random" checked><span>ランダム</span></label>
-                    <label><input type="radio" name="order" value="sequential"><span>店番順</span></label>
-                    <label><input type="radio" name="order" value="randomSequential"><span>ランダム(店番順)</span></label>
-                </div>
-            </div>
+    <!-- ② 通常モード画面 -->
+    <div id="normal-screen" class="hidden">
+        <button id="branch-list-btn">支店一覧を見る</button>
 
-            <div class="setting-group">
-                <h2>出題モード</h2>
-                <div class="segmented-control">
-                    <label><input type="radio" name="mode" value="nameToCode" checked><span>支店名 → 店番</span></label>
-                    <label><input type="radio" name="mode" value="codeToName"><span>店番 → 支店名</span></label>
-                </div>
+        <div class="setting-group">
+            <h2>出題順</h2>
+            <div class="segmented-control">
+                <label><input type="radio" name="order" value="random" checked><span>ランダム</span></label>
+                <label><input type="radio" name="order" value="sequential"><span>店番順</span></label>
+                <label><input type="radio" name="order" value="randomSequential"><span>ランダム(店番順)</span></label>
             </div>
-
-            <div class="setting-group">
-                <h2>問題数</h2>
-                <div class="segmented-control">
-                    <label><input type="radio" name="questionCount" value="10" checked><span>10問</span></label>
-                    <label><input type="radio" name="questionCount" value="20"><span>20問</span></label>
-                    <label><input type="radio" name="questionCount" value="50"><span>50問</span></label>
-                    <label><input type="radio" name="questionCount" value="all"><span>全問</span></label>
-                </div>
-            </div>
-            <div class="setting-group">
-                <h2>出題範囲</h2>
-                <div class="segmented-control">
-                    <label><input type="radio" name="range" value="all" checked><span>全119拠点</span></label>
-                    <label><input type="radio" name="range" value="past"><span>過去問(55拠点)</span></label>
-                </div>
-            </div>
-            <button id="start-btn">テスト開始</button>
         </div>
 
-        <div id="branch-list-screen" class="hidden">
-            <h2>支店一覧</h2>
-            <div class="table-container">
-                <table id="branch-table">
-                    <thead>
-                        <tr>
-                            <th>店番</th>
-                            <th>支店名</th>
-                            <th>ふりがな</th>
-                        </tr>
-                    </thead>
-                    <tbody id="branch-table-body"></tbody>
-                </table>
+        <div class="setting-group">
+            <h2>出題モード</h2>
+            <div class="segmented-control">
+                <label><input type="radio" name="mode" value="nameToCode" checked><span>支店名 → 店番</span></label>
+                <label><input type="radio" name="mode" value="codeToName"><span>店番 → 支店名</span></label>
             </div>
-            <button id="back-home-btn">ホームへ戻る</button>
         </div>
 
-        <div id="quiz-screen" class="hidden">
-            <p id="progress">問題 1 / 10</p>
-            <div class="question-box">
-                <h2 id="question-title">支店名</h2>
-                <p id="question"></p>
+        <div class="setting-group">
+            <h2>問題数</h2>
+            <div class="segmented-control">
+                <label><input type="radio" name="questionCount" value="10" checked><span>10問</span></label>
+                <label><input type="radio" name="questionCount" value="20"><span>20問</span></label>
+                <label><input type="radio" name="questionCount" value="50"><span>50問</span></label>
+                <label><input type="radio" name="questionCount" value="all"><span>全問</span></label>
             </div>
-            <input type="text" id="answer" placeholder="回答を入力" autocomplete="off">
-            <button id="submit-btn">回答する</button>
-            <button id="give-up-btn" class="secondary-btn">途中で終了して結果を見る</button>
         </div>
 
-        <div id="result-screen" class="hidden">
-            <h2>テスト完了</h2>
-            <p id="score"></p>
-            <p id="rate"></p>
-            <hr>
-            <h3>正解した問題</h3>
-            <ul id="correct-list"></ul>
-            <hr>
-            <h3>間違えた問題</h3>
-            <ul id="mistake-list"></ul>
-            <div class="button-group">
-                <button id="restart-btn">もう一度挑戦</button>
-                <button id="retry-mistake-btn" class="secondary-btn">間違えた問題だけ再挑戦</button>
-                <button id="home-btn">ホームに戻る</button>
+        <div class="setting-group">
+            <h2>出題範囲</h2>
+            <div class="segmented-control">
+                <label><input type="radio" name="range" value="all" checked><span>全119拠点</span></label>
+                <label><input type="radio" name="range" value="past"><span>過去問(55拠点)</span></label>
             </div>
+        </div>
+
+        <button id="start-btn">テスト開始</button>
+        <button id="back-mode-btn" class="secondary-btn">モード選択へ戻る</button>
+    </div>
+
+    <!-- ③ テストモード画面 -->
+    <div id="test-screen" class="hidden">
+        <button id="branch-list-btn2">支店一覧を見る</button>
+
+        <div class="setting-group">
+            <h2>テスト選択</h2>
+
+            <div class="segmented-control">
+                <button class="test-btn" data-test="test1">テスト1</button>
+                <button class="test-btn" data-test="test2">テスト2</button>
+                <button class="test-btn" data-test="test3">テスト3</button>
+            </div>
+
+            <div class="segmented-control" style="margin-top:8px;">
+                <button class="test-btn" data-test="test4">テスト4</button>
+                <button class="test-btn" data-test="test5">テスト5</button>
+                <button class="test-btn" data-test="test6">テスト6</button>
+            </div>
+
+            <div class="segmented-control" style="margin-top:8px;">
+                <button class="test-btn" data-test="test7">テスト7</button>
+                <button class="test-btn" data-test="test8">テスト8</button>
+            </div>
+        </div>
+
+        <button id="start-test-btn">テスト開始</button>
+        <button id="back-mode-btn2" class="secondary-btn">モード選択へ戻る</button>
+    </div>
+
+    <!-- ④ 支店一覧画面 -->
+    <div id="branch-list-screen" class="hidden">
+        <h2>支店一覧</h2>
+
+        <div class="table-container">
+            <table id="branch-table">
+                <thead>
+                    <tr>
+                        <th>店番</th>
+                        <th>支店名</th>
+                        <th>ふりがな</th>
+                    </tr>
+                </thead>
+                <tbody id="branch-table-body"></tbody>
+            </table>
+        </div>
+
+        <button id="back-home-btn">モード選択へ戻る</button>
+    </div>
+
+    <!-- ⑤ クイズ画面 -->
+    <div id="quiz-screen" class="hidden">
+        <p id="progress"></p>
+
+        <div class="question-box">
+            <h2 id="question-title"></h2>
+            <p id="question"></p>
+        </div>
+
+        <input type="text" id="answer" placeholder="回答を入力" autocomplete="off">
+        <button id="submit-btn">回答する</button>
+        <button id="give-up-btn" class="secondary-btn">途中で終了して結果を見る</button>
+    </div>
+
+    <!-- ⑥ 結果画面 -->
+    <div id="result-screen" class="hidden">
+        <h2>テスト完了</h2>
+        <p id="score"></p>
+        <p id="rate"></p>
+
+        <hr>
+
+        <h3>正解した問題</h3>
+        <ul id="correct-list"></ul>
+
+        <hr>
+
+        <h3>間違えた問題</h3>
+        <ul id="mistake-list"></ul>
+
+        <div class="button-group">
+            <button id="restart-btn">もう一度挑戦</button>
+            <button id="retry-mistake-btn" class="secondary-btn">間違えた問題だけ再挑戦</button>
+            <button id="home-btn">モード選択へ戻る</button>
         </div>
     </div>
 
-    <script src="js/data.js"></script>
-    <script src="js/app.js"></script>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

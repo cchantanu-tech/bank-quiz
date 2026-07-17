@@ -1,9 +1,27 @@
-const startScreen = document.getElementById("start-screen");
+// =======================
+// 画面要素の取得
+// =======================
+
+const modeScreen = document.getElementById("mode-screen");
+const normalScreen = document.getElementById("normal-screen");
+const testScreen = document.getElementById("test-screen");
+
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
 const branchListScreen = document.getElementById("branch-list-screen");
 
+// モード選択ボタン
+const normalModeBtn = document.getElementById("normal-mode-btn");
+const testModeBtn = document.getElementById("test-mode-btn");
+
+// 通常モード
 const startBtn = document.getElementById("start-btn");
+
+// テストモード
+const startTestBtn = document.getElementById("start-test-btn");
+const testButtons = document.querySelectorAll(".test-btn");
+
+// 共通
 const submitBtn = document.getElementById("submit-btn");
 const giveUpBtn = document.getElementById("give-up-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -11,6 +29,7 @@ const homeBtn = document.getElementById("home-btn");
 const retryMistakeBtn = document.getElementById("retry-mistake-btn");
 
 const branchListBtn = document.getElementById("branch-list-btn");
+const branchListBtn2 = document.getElementById("branch-list-btn2");
 const backHomeBtn = document.getElementById("back-home-btn");
 
 const branchTableBody = document.getElementById("branch-table-body");
@@ -26,26 +45,123 @@ const rate = document.getElementById("rate");
 const correctList = document.getElementById("correct-list");
 const mistakeList = document.getElementById("mistake-list");
 
+// =======================
+// テストモード問題セット
+// =======================
+const writtenTest1 = [
+    { question: "三木支店", answer: "226", type: "nameToCode" },
+    { question: "311", answer: "庵治出張所", type: "codeToName" },
+
+    { question: "古高松支店", answer: "312", type: "nameToCode" },
+    { question: "222", answer: "香西支店", type: "codeToName" },
+
+    { question: "一宮出張所", answer: "341", type: "nameToCode" },
+    { question: "305", answer: "鬼無出張所", type: "codeToName" },
+
+    { question: "鶴市出張所", answer: "342", type: "nameToCode" },
+    { question: "225", answer: "志度支店", type: "codeToName" },
+
+    { question: "伏石支店", answer: "304", type: "nameToCode" },
+    { question: "221", answer: "仏生山支店", type: "codeToName" },
+
+    { question: "水田支店", answer: "315", type: "nameToCode" },
+    { question: "219", answer: "太田支店", type: "codeToName" },
+
+    { question: "円座支店", answer: "223", type: "nameToCode" },
+    { question: "314", answer: "医大前出張所", type: "codeToName" },
+
+    { question: "頭脳化センター出張所", answer: "357", type: "nameToCode" },
+    { question: "309", answer: "畑田出張所", type: "codeToName" },
+
+    { question: "屋島支店", answer: "220", type: "nameToCode" },
+    { question: "224", answer: "八栗支店", type: "codeToName" },
+
+    { question: "川島支店", answer: "227", type: "nameToCode" },
+    { question: "359", answer: "さぬき市役所出張所", type: "codeToName" }
+];
+
+// =======================
+// 状態管理
+// =======================
+
 let questions = [];
 let currentIndex = 0;
 let correctCount = 0;
-
 let correctAnswers = [];
 let mistakes = [];
 
-startBtn.addEventListener("click", startQuiz);
-submitBtn.addEventListener("click", submitAnswer);
-giveUpBtn.addEventListener("click", finishQuizMidway);
-restartBtn.addEventListener("click", restartQuiz);
-homeBtn.addEventListener("click", goHome);
-retryMistakeBtn.addEventListener("click", retryMistakes);
+let selectedTest = null; // テストモード用
 
-branchListBtn.addEventListener("click", showBranchList);
-backHomeBtn.addEventListener("click", backHome);
 
-answerInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") submitAnswer();
+// =======================
+// 画面切り替え
+// =======================
+
+normalModeBtn.addEventListener("click", () => {
+    modeScreen.classList.add("hidden");
+    normalScreen.classList.remove("hidden");
 });
+
+testModeBtn.addEventListener("click", () => {
+    modeScreen.classList.add("hidden");
+    testScreen.classList.remove("hidden");
+});
+
+
+// =======================
+// テストモード：テスト選択
+// =======================
+
+testButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        selectedTest = btn.dataset.test;
+        alert(`「${btn.textContent}」を選択しました`);
+    });
+});
+
+
+// =======================
+// テストモード：テスト開始
+// =======================
+
+startTestBtn.addEventListener("click", () => {
+    if (!selectedTest) {
+        alert("テストを選択してください");
+        return;
+    }
+
+    // テストデータ読み込み
+    if (selectedTest === "test1") questions = writtenTest1;
+    if (selectedTest === "test2") questions = writtenTest2;
+    if (selectedTest === "test3") questions = writtenTest3;
+    if (selectedTest === "test4") questions = writtenTest4;
+    if (selectedTest === "test5") questions = writtenTest5;
+    if (selectedTest === "test6") questions = writtenTest6;
+    if (selectedTest === "test7") questions = writtenTest7;
+    if (selectedTest === "test8") questions = writtenTest8;
+
+    currentIndex = 0;
+    correctCount = 0;
+    correctAnswers = [];
+    mistakes = [];
+
+    testScreen.classList.add("hidden");
+    quizScreen.classList.remove("hidden");
+
+    showQuestionWritten();
+});
+
+
+// =======================
+// 通常モード：テスト開始
+// =======================
+
+startBtn.addEventListener("click", startQuiz);
+
+
+// =======================
+// 通常モードの問題表示
+// =======================
 
 function startQuiz() {
     const order = document.querySelector('input[name="order"]:checked').value;
@@ -77,15 +193,18 @@ function startQuiz() {
     correctAnswers = [];
     mistakes = [];
 
-    startScreen.classList.add("hidden");
-    branchListScreen.classList.add("hidden");
-    resultScreen.classList.add("hidden");
+    normalScreen.classList.add("hidden");
     quizScreen.classList.remove("hidden");
 
-    showQuestion();
+    showQuestionNormal();
 }
 
-function showQuestion() {
+
+// =======================
+// 通常モード：問題表示
+// =======================
+
+function showQuestionNormal() {
     const currentQuestion = questions[currentIndex];
     const mode = document.querySelector('input[name="mode"]:checked').value;
 
@@ -95,7 +214,7 @@ function showQuestion() {
         questionTitle.textContent = "支店名 / 出張所名";
         question.innerHTML = `
             ${currentQuestion.name}<br>
-            <span style="font-size:0.95rem; font-weight:normal; color:#64748b; display:block; margin-top:4px;">（${currentQuestion.kana}）</span>
+            <span style="font-size:0.95rem; color:#64748b;">（${currentQuestion.kana}）</span>
         `;
         answerInput.placeholder = "店番を入力";
     } else {
@@ -108,7 +227,53 @@ function showQuestion() {
     answerInput.focus();
 }
 
+
+// =======================
+// テストモード：問題表示（交互形式）
+// =======================
+
+function showQuestionWritten() {
+    const q = questions[currentIndex];
+
+    progress.textContent = `問題 ${currentIndex + 1} / ${questions.length}`;
+
+    if (q.type === "nameToCode") {
+        questionTitle.textContent = "この支店名の支店番号は？";
+        question.textContent = q.question;
+        answerInput.placeholder = "店番を入力";
+    } else {
+        questionTitle.textContent = "この支店番号の支店名は？";
+        question.textContent = q.question;
+        answerInput.placeholder = "支店名を入力";
+    }
+
+    answerInput.value = "";
+    answerInput.focus();
+}
+
+
+// =======================
+// 回答処理（通常モード & テストモード共通）
+// =======================
+
+submitBtn.addEventListener("click", submitAnswer);
+
 function submitAnswer() {
+    const isWrittenMode = selectedTest !== null;
+
+    if (isWrittenMode) {
+        submitAnswerWritten();
+    } else {
+        submitAnswerNormal();
+    }
+}
+
+
+// =======================
+// 通常モード：回答処理
+// =======================
+
+function submitAnswerNormal() {
     const currentQuestion = questions[currentIndex];
     const mode = document.querySelector('input[name="mode"]:checked').value;
 
@@ -123,26 +288,20 @@ function submitAnswer() {
         const normalizedAnswer = answer.replace(/\s+/g, "").toLowerCase();
         const normalizedName = currentQuestion.name.replace(/\s+/g, "").toLowerCase();
         const normalizedKana = currentQuestion.kana.replace(/\s+/g, "").toLowerCase();
-        
-        // 「支店」や「出張所」を入力し忘れても正解にする親切設計
+
         const rawName = normalizedName.replace(/支店|出張所/g, "");
         const rawKana = normalizedKana.replace(/してん|しゅっちょうしょ/g, "");
 
-        isCorrect = (
-            normalizedAnswer === normalizedName || 
+        isCorrect =
+            normalizedAnswer === normalizedName ||
             normalizedAnswer === normalizedKana ||
             normalizedAnswer === rawName ||
-            normalizedAnswer === rawKana
-        );
+            normalizedAnswer === rawKana;
     }
 
     if (isCorrect) {
         correctCount++;
-        correctAnswers.push({
-            name: currentQuestion.name,
-            code: currentQuestion.code,
-            kana: currentQuestion.kana
-        });
+        correctAnswers.push(currentQuestion);
     } else {
         mistakes.push({
             name: currentQuestion.name,
@@ -157,15 +316,60 @@ function submitAnswer() {
     if (currentIndex >= questions.length) {
         showResult();
     } else {
-        showQuestion();
+        showQuestionNormal();
     }
 }
+
+
+// =======================
+// テストモード：回答処理
+// =======================
+
+function submitAnswerWritten() {
+    const q = questions[currentIndex];
+    const answer = answerInput.value.trim();
+    if (answer === "") return;
+
+    let isCorrect = false;
+
+    if (q.type === "nameToCode") {
+        isCorrect = answer === q.answer;
+    } else {
+        const normalized = answer.replace(/\s+/g, "").toLowerCase();
+        const normalizedAnswer = q.answer.replace(/\s+/g, "").toLowerCase();
+        isCorrect = normalized === normalizedAnswer;
+    }
+
+    if (isCorrect) {
+        correctCount++;
+        correctAnswers.push(q);
+    } else {
+        mistakes.push({
+            question: q.question,
+            correct: q.answer,
+            user: answer,
+            type: q.type
+        });
+    }
+
+    currentIndex++;
+
+    if (currentIndex >= questions.length) {
+        showResult();
+    } else {
+        showQuestionWritten();
+    }
+}
+
+
+// =======================
+// 結果画面
+// =======================
 
 function showResult() {
     quizScreen.classList.add("hidden");
     resultScreen.classList.remove("hidden");
 
-    const mode = document.querySelector('input[name="mode"]:checked').value;
     const percentage = Math.round((correctCount / questions.length) * 100);
 
     score.textContent = `${questions.length}問中 ${correctCount}問正解`;
@@ -174,46 +378,87 @@ function showResult() {
     correctList.innerHTML = "";
     mistakeList.innerHTML = "";
 
-    correctAnswers.forEach(correct => {
-        const li = document.createElement("li");
-        if (mode === "nameToCode") {
-            li.innerHTML = `<strong>${correct.name}</strong> → ${correct.code}`;
-        } else {
-            li.innerHTML = `店番: <strong>${correct.code}</strong> → ${correct.name}`;
-        }
-        correctList.appendChild(li);
-    });
+    const isWrittenMode = selectedTest !== null;
 
-    mistakes.forEach(mistake => {
-        const li = document.createElement("li");
-        const correctText = mode === "nameToCode" ? mistake.code : `${mistake.name}`;
-        if (mode === "nameToCode") {
+    if (isWrittenMode) {
+        correctAnswers.forEach(c => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${c.question}</strong> → ${c.answer}`;
+            correctList.appendChild(li);
+        });
+
+        mistakes.forEach(m => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${m.question}</strong><br>
+                あなたの回答：<span style="color:#ef4444;">${m.user}</span><br>
+                正解：${m.correct}
+            `;
+            mistakeList.appendChild(li);
+        });
+
+    } else {
+        correctAnswers.forEach(correct => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${correct.name}</strong> → ${correct.code}`;
+            correctList.appendChild(li);
+        });
+
+        mistakes.forEach(mistake => {
+            const li = document.createElement("li");
             li.innerHTML = `
                 <strong>${mistake.name}</strong><br>
-                あなたの回答：<span style="color:#ef4444;">${mistake.answer}</span> / 正解：<strong>${correctText}</strong>
+                あなたの回答：<span style="color:#ef4444;">${mistake.answer}</span><br>
+                正解：${mistake.code}
             `;
-        } else {
-            li.innerHTML = `
-                <strong>店番: ${mistake.code}</strong><br>
-                あなたの回答：<span style="color:#ef4444;">${mistake.answer}</span> / 正解：<strong>${correctText}</strong>
-            `;
-        }
-        mistakeList.appendChild(li);
-    });
+            mistakeList.appendChild(li);
+        });
+    }
 }
 
-function restartQuiz() {
-    startQuiz();
-}
 
-function retryMistakes() {
+// =======================
+// その他の機能
+// =======================
+
+restartBtn.addEventListener("click", () => {
+    if (selectedTest) {
+        currentIndex = 0;
+        correctCount = 0;
+        correctAnswers = [];
+        mistakes = [];
+        quizScreen.classList.remove("hidden");
+        resultScreen.classList.add("hidden");
+        showQuestionWritten();
+    } else {
+        startQuiz();
+    }
+});
+
+homeBtn.addEventListener("click", () => {
+    selectedTest = null;
+    quizScreen.classList.add("hidden");
+    resultScreen.classList.add("hidden");
+    branchListScreen.classList.add("hidden");
+    modeScreen.classList.remove("hidden");
+});
+
+retryMistakeBtn.addEventListener("click", () => {
     if (mistakes.length === 0) return;
 
-    questions = mistakes.map(m => ({
-        code: m.code,
-        name: m.name,
-        kana: m.kana
-    }));
+    if (selectedTest) {
+        questions = mistakes.map(m => ({
+            question: m.question,
+            answer: m.correct,
+            type: m.type
+        }));
+    } else {
+        questions = mistakes.map(m => ({
+            code: m.code,
+            name: m.name,
+            kana: m.kana
+        }));
+    }
 
     currentIndex = 0;
     correctCount = 0;
@@ -223,19 +468,19 @@ function retryMistakes() {
     resultScreen.classList.add("hidden");
     quizScreen.classList.remove("hidden");
 
-    showQuestion();
-}
+    if (selectedTest) showQuestionWritten();
+    else showQuestionNormal();
+});
 
-function goHome() {
-    quizScreen.classList.add("hidden");
-    resultScreen.classList.add("hidden");
-    branchListScreen.classList.add("hidden");
-    startScreen.classList.remove("hidden");
-}
+branchListBtn.addEventListener("click", showBranchList);
+branchListBtn2.addEventListener("click", showBranchList);
 
 function showBranchList() {
-    startScreen.classList.add("hidden");
+    normalScreen.classList.add("hidden");
+    testScreen.classList.add("hidden");
+    modeScreen.classList.add("hidden");
     branchListScreen.classList.remove("hidden");
+
     branchTableBody.innerHTML = "";
 
     const sortedBranches = [...branches].sort((a, b) => Number(a.code) - Number(b.code));
@@ -251,18 +496,51 @@ function showBranchList() {
     });
 }
 
-function backHome() {
+backHomeBtn.addEventListener("click", () => {
     branchListScreen.classList.add("hidden");
-    startScreen.classList.remove("hidden");
-}
+    modeScreen.classList.remove("hidden");
+});
 
-function finishQuizMidway() {
+giveUpBtn.addEventListener("click", () => {
     if (currentIndex === 0) {
-        goHome();
+        homeBtn.click();
         return;
     }
     if (confirm("ここまでの回答でテストを終了し、結果を表示しますか？")) {
         questions = questions.slice(0, currentIndex);
         showResult();
     }
-}
+});
+
+const backModeBtn = document.getElementById("back-mode-btn");
+const backModeBtn2 = document.getElementById("back-mode-btn2");
+
+backModeBtn.addEventListener("click", () => {
+    normalScreen.classList.add("hidden");
+    testScreen.classList.add("hidden");
+    branchListScreen.classList.add("hidden");
+    quizScreen.classList.add("hidden");
+    resultScreen.classList.add("hidden");
+    modeScreen.classList.remove("hidden");
+    selectedTest = null;
+});
+
+backModeBtn2.addEventListener("click", () => {
+    normalScreen.classList.add("hidden");
+    testScreen.classList.add("hidden");
+    branchListScreen.classList.add("hidden");
+    quizScreen.classList.add("hidden");
+    resultScreen.classList.add("hidden");
+    modeScreen.classList.remove("hidden");
+    selectedTest = null;
+});
+
+backHomeBtn.addEventListener("click", () => {
+    branchListScreen.classList.add("hidden");
+    modeScreen.classList.remove("hidden");
+});
+// トップ画面が消えたらモード画面を表示
+setTimeout(() => {
+    document.getElementById("top-screen").classList.add("hidden");
+    document.getElementById("mode-screen").classList.remove("hidden");
+}, 2500); // 2.5秒後に切り替え

@@ -49,35 +49,215 @@ const mistakeList = document.getElementById("mistake-list");
 // テストモード問題セット
 // =======================
 const writtenTest1 = [
-    { question: "三木支店", answer: "226", type: "nameToCode" },
+    { question: "三木", answer: "226", type: "nameToCode" },
     { question: "311", answer: "庵治", type: "codeToName" },
 
-    { question: "古高松支店", answer: "312", type: "nameToCode" },
+    { question: "古高松", answer: "312", type: "nameToCode" },
     { question: "222", answer: "香西", type: "codeToName" },
 
-    { question: "一宮出張所", answer: "341", type: "nameToCode" },
+    { question: "一宮", answer: "341", type: "nameToCode" },
     { question: "305", answer: "鬼無", type: "codeToName" },
 
-    { question: "鶴市出張所", answer: "342", type: "nameToCode" },
+    { question: "鶴市", answer: "342", type: "nameToCode" },
     { question: "225", answer: "志度", type: "codeToName" },
 
-    { question: "伏石支店", answer: "304", type: "nameToCode" },
+    { question: "伏石", answer: "304", type: "nameToCode" },
     { question: "221", answer: "仏生山", type: "codeToName" },
 
-    { question: "水田支店", answer: "315", type: "nameToCode" },
+    { question: "水田", answer: "315", type: "nameToCode" },
     { question: "219", answer: "太田", type: "codeToName" },
 
-    { question: "円座支店", answer: "223", type: "nameToCode" },
+    { question: "円座", answer: "223", type: "nameToCode" },
     { question: "314", answer: "医大前", type: "codeToName" },
 
-    { question: "頭脳化センター出張所", answer: "357", type: "nameToCode" },
+    { question: "頭脳化センター", answer: "357", type: "nameToCode" },
     { question: "309", answer: "畑田", type: "codeToName" },
 
-    { question: "屋島支店", answer: "220", type: "nameToCode" },
+    { question: "屋島", answer: "220", type: "nameToCode" },
     { question: "224", answer: "八栗", type: "codeToName" },
 
-    { question: "川島支店", answer: "227", type: "nameToCode" },
+    { question: "川島", answer: "227", type: "nameToCode" },
     { question: "359", answer: "さぬき市役所", type: "codeToName" }
+];
+
+const writtenTest2 = [
+    { question: "仁尾", answer: "284", type: "nameToCode" },
+    { question: "335", answer: "観音寺市役所", type: "codeToName" },
+
+    { question: "三野町", answer: "289", type: "nameToCode" },
+    { question: "280", answer: "須田", type: "codeToName" },
+
+    { question: "豊浜", answer: "287", type: "nameToCode" },
+    { question: "288", answer: "観音寺東部", type: "codeToName" },
+
+    { question: "高瀬", answer: "282", type: "nameToCode" },
+    { question: "286", answer: "大野原", type: "codeToName" },
+
+    { question: "詫間", answer: "281", type: "nameToCode" },
+    { question: "283", answer: "山本", type: "codeToName" },
+
+    { question: "観音寺", answer: "285", type: "nameToCode" },
+    { question: "345", answer: "観音寺南", type: "codeToName" },
+
+    { question: "山本", answer: "283", type: "nameToCode" },
+    { question: "289", answer: "三野町", type: "codeToName" }
+];
+
+const writtenTest3 = [
+    { question: "宇多津", answer: "265", type: "nameToCode" },
+    { question: "262", answer: "坂出東部", type: "codeToName" },
+
+    { question: "財田", answer: "334", type: "nameToCode" },
+    { question: "357", answer: "丸亀市役所", type: "codeToName" },
+
+    { question: "善通寺", answer: "273", type: "nameToCode" },
+    { question: "329", answer: "丸亀南", type: "codeToName" },
+
+    { question: "駒止", answer: "263", type: "nameToCode" },
+    { question: "363", answer: "フジグラン丸亀", type: "codeToName" },
+
+    { question: "満濃", answer: "276", type: "nameToCode" },
+    { question: "261", answer: "坂出", type: "codeToName" },
+
+    { question: "城西", answer: "272", type: "nameToCode" },
+    { question: "331", answer: "塩屋", type: "codeToName" },
+
+    { question: "東部", answer: "333", type: "nameToCode" },
+    { question: "328", answer: "丸亀東", type: "codeToName" },
+
+    { question: "飯山", answer: "264", type: "nameToCode" },
+    { question: "324", answer: "坂出市役所", type: "codeToName" },
+
+    { question: "丸亀", answer: "271", type: "nameToCode" },
+    { question: "274", answer: "琴平", type: "codeToName" },
+
+    { question: "多度津", answer: "275", type: "nameToCode" }
+];
+
+const writtenTest4 = [
+    { question: "直島", answer: "231", type: "nameToCode" },
+    { question: "242", answer: "土庄", type: "codeToName" },
+
+    { question: "富田", answer: "256", type: "nameToCode" },
+    { question: "253", answer: "三本松", type: "codeToName" },
+
+    { question: "国分寺", answer: "229", type: "nameToCode" },
+    { question: "230", answer: "空港口", type: "codeToName" },
+
+    { question: "引田", answer: "251", type: "nameToCode" },
+    { question: "255", answer: "長尾", type: "codeToName" },
+
+    { question: "端岡", answer: "317", type: "nameToCode" },
+    { question: "228", answer: "綾南", type: "codeToName" },
+
+    { question: "津田", answer: "254", type: "nameToCode" },
+    { question: "252", answer: "白鳥", type: "codeToName" },
+
+    { question: "内海", answer: "241", type: "nameToCode" },
+    { question: "318", answer: "浅野", type: "codeToName" },
+
+    { question: "土庄", answer: "242", type: "nameToCode" },
+    { question: "229", answer: "国分寺", type: "codeToName" }
+];
+
+const writtenTest5 = [
+    { question: "高松駅前", answer: "206", type: "nameToCode" },
+    { question: "218", answer: "木太", type: "codeToName" },
+
+    { question: "栗林", answer: "202", type: "nameToCode" },
+    { question: "203", answer: "東", type: "codeToName" },
+
+    { question: "宮脇", answer: "211", type: "nameToCode" },
+    { question: "101", answer: "本店", type: "codeToName" },
+
+    { question: "瓦町", answer: "210", type: "nameToCode" },
+    { question: "302", answer: "ゆめタウン高松", type: "codeToName" },
+
+    { question: "桜町", answer: "214", type: "nameToCode" },
+    { question: "212", answer: "松福", type: "codeToName" },
+
+    { question: "西", answer: "204", type: "nameToCode" },
+    { question: "207", answer: "県庁", type: "codeToName" },
+
+    { question: "鶴尾", answer: "303", type: "nameToCode" },
+    { question: "205", answer: "田町", type: "codeToName" },
+
+    { question: "ゆめタウン高松", answer: "302", type: "nameToCode" },
+    { question: "201", answer: "高松", type: "codeToName" },
+
+    { question: "本店", answer: "101", type: "nameToCode" },
+    { question: "213", answer: "中央市場", type: "codeToName" },
+
+    { question: "東", answer: "203", type: "nameToCode" },
+    { question: "208", answer: "高松市役所", type: "codeToName" },
+
+    { question: "県庁", answer: "207", type: "nameToCode" }
+];
+
+const writtenTest6 = [
+    { question: "徳島", answer: "661", type: "nameToCode" },
+    { question: "605", answer: "西条", type: "codeToName" },
+
+    { question: "伊野", answer: "633", type: "nameToCode" },
+    { question: "501", answer: "福岡", type: "codeToName" },
+
+    { question: "鳴門", answer: "662", type: "nameToCode" },
+    { question: "601", answer: "松山", type: "codeToName" },
+
+    { question: "西条", answer: "605", type: "nameToCode" },
+    { question: "661", answer: "徳島", type: "codeToName" },
+
+    { question: "高知", answer: "631", type: "nameToCode" },
+    { question: "602", answer: "新居浜", type: "codeToName" },
+
+    { question: "三島", answer: "603", type: "nameToCode" },
+    { question: "663", answer: "徳島北", type: "codeToName" }
+];
+
+const writtenTest7 = [
+    { question: "総社", answer: "477", type: "nameToCode" },
+    { question: "461", answer: "広島", type: "codeToName" },
+
+    { question: "玉野", answer: "474", type: "nameToCode" },
+    { question: "471", answer: "岡山", type: "codeToName" },
+
+    { question: "大元", answer: "478", type: "nameToCode" },
+    { question: "479", answer: "岡山駅西口", type: "codeToName" },
+
+    { question: "庭瀬", answer: "480", type: "nameToCode" },
+    { question: "475", answer: "児島", type: "codeToName" },
+
+    { question: "清輝橋", answer: "472", type: "nameToCode" },
+    { question: "478", answer: "大元", type: "codeToName" },
+
+    { question: "倉敷", answer: "476", type: "nameToCode" },
+    { question: "481", answer: "岡山南", type: "codeToName" },
+
+    { question: "水島", answer: "473", type: "nameToCode" },
+    { question: "462", answer: "福山", type: "codeToName" }
+];
+
+const writtenTest8 = [
+    { question: "北大阪", answer: "446", type: "nameToCode" },
+    { question: "452", answer: "姫路", type: "codeToName" },
+
+    { question: "九条", answer: "443", type: "nameToCode" },
+    { question: "421", answer: "名古屋", type: "codeToName" },
+
+    { question: "加古川", answer: "455", type: "nameToCode" },
+    { question: "447", answer: "南大阪", type: "codeToName" },
+
+    { question: "東大阪", answer: "445", type: "nameToCode" },
+    { question: "455", answer: "加古川", type: "codeToName" },
+
+    { question: "東京", answer: "401", type: "nameToCode" },
+    { question: "451", answer: "神戸", type: "codeToName" },
+
+    { question: "明石", answer: "453", type: "nameToCode" },
+    { question: "441", answer: "大阪", type: "codeToName" },
+
+    { question: "新宿", answer: "402", type: "nameToCode" },
+    { question: "401", answer: "東京", type: "codeToName" }
 ];
 
 // =======================
